@@ -28,7 +28,7 @@ pids
 *.seed
 *.pid.lock
 
-# Operating System generated files
+
 .DS_Store
 .DS_Store?
 ._*
