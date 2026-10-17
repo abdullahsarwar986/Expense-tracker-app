@@ -1,42 +1,126 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link rel="stylesheet" href="expense-tracker-app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="expense-tracker-app.css">
 </head>
 <body>
+  <main class="container">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">PERSONAL FINANCE</p>
+        <h1>Expense Tracker</h1>
+        <p class="subtitle">Track spending, due payments, and monthly totals.</p>
+      </div>
+    </header>
 
-    <main class="container">
-        <h2>Expense Tracker</h2>
-        
-      
-        <div class="balance-container">
-            <h4>Total Balance</h4>
-            <h1 id="balance">$0.00</h1>
+    <section class="summary-grid">
+      <article class="summary-card balance-card">
+        <p>Total expenses</p>
+        <h2 id="balance">$0.00</h2>
+        <span>All recorded expenses</span>
+      </article>
+      <article class="summary-card paid-card">
+        <p>Paid</p>
+        <h2 id="paid-total">$0.00</h2>
+        <span id="paid-count">0 expenses</span>
+      </article>
+      <article class="summary-card unpaid-card">
+        <p>Unpaid</p>
+        <h2 id="unpaid-total">$0.00</h2>
+        <span id="unpaid-count">0 expenses</span>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Add an expense</h2>
+      <form id="expense-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="text">Expense name</label>
+            <input type="text" id="text" placeholder="e.g. Electricity bill" maxlength="100" required>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount ($)</label>
+            <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="expense-date">Expense date</label>
+            <input type="date" id="expense-date" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Payment status</label>
+            <select id="status" required>
+              <option value="unpaid">Unpaid</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
         </div>
+        <button class="btn" type="submit">+ Add expense</button>
+      </form>
+    </section>
 
-      
-        <form id="expense-form">
-            <div class="form-group">
-                <label for="text">Expense Name</label>
-                <input type="text" id="text" placeholder="Enter description..." required />
-            </div>
-            <div class="form-group">
-                <label for="amount">Amount ($)</label>
-                <input type="number" id="amount" placeholder="Enter amount..." step="0.01" required />
-            </div>
-            <button class="btn">Add Expense</button>
-        </form>
+    <section class="panel">
+      <div class="history-heading">
+        <div>
+          <h2 class="section-title">Expense history</h2>
+          <p class="muted">Filter by date, month, or payment status.</p>
+        </div>
+        <button id="clear-filters" class="btn btn-light" type="button">Clear filters</button>
+      </div>
 
-        
-        <h3>History</h3>
-        <ul id="list" class="list">
-          
-        </ul>
-    </main>
+      <div class="filters">
+        <div class="form-group">
+          <label for="filter-mode">View</label>
+          <select id="filter-mode">
+            <option value="all">All expenses</option>
+            <option value="date">Specific date</option>
+            <option value="month">Specific month</option>
+          </select>
+        </div>
+        <div class="form-group" id="date-filter-group" hidden>
+          <label for="filter-date">Choose date</label>
+          <input type="date" id="filter-date">
+        </div>
+        <div class="form-group" id="month-filter-group" hidden>
+          <label for="filter-month">Choose month</label>
+          <input type="month" id="filter-month">
+        </div>
+        <div class="form-group">
+          <label for="status-filter">Payment status</label>
+          <select id="status-filter">
+            <option value="all">Paid and unpaid</option>
+            <option value="paid">Paid only</option>
+            <option value="unpaid">Unpaid only</option>
+          </select>
+        </div>
+      </div>
 
-    <script src="expense-tracker-app.js"></script>
+      <div class="filtered-summary">
+        <div>
+          <span>Filtered total</span>
+          <strong id="filtered-total">$0.00</strong>
+        </div>
+        <div>
+          <span>Paid</span>
+          <strong id="filtered-paid">$0.00</strong>
+        </div>
+        <div>
+          <span>Unpaid</span>
+          <strong id="filtered-unpaid">$0.00</strong>
+        </div>
+      </div>
+
+      <ul id="list" class="list" aria-live="polite"></ul>
+      <p id="empty-state" class="empty-state">No expenses match these filters.</p>
+    </section>
+
+    <p class="privacy-note">Your expenses are saved in this browser on this device using Local Storage.</p>
+  </main>
+  <script src="expense-tracker-app.js"></script>
 </body>
 </html>
+
