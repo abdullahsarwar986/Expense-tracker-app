@@ -12,7 +12,7 @@
     <header class="app-header">
       <div>
         <p class="eyebrow">PERSONAL FINANCE</p>
-        <h1>Expense Tracker</h1>
+        <h1>Home Expense Tracker</h1>
         <p class="subtitle">Track spending, due payments, and monthly totals.</p>
       </div>
     </header>
@@ -25,15 +25,15 @@
       </article>
 
       <article class="summary-card paid-card">
-        <p>Paid</p>
+        <p>Amount paid</p>
         <h2 id="paid-total">$0.00</h2>
-        <span id="paid-count">0 expenses</span>
+        <span id="paid-count">0 expenses fully paid</span>
       </article>
 
       <article class="summary-card unpaid-card">
-        <p>Unpaid</p>
+        <p>Amount remaining</p>
         <h2 id="unpaid-total">$0.00</h2>
-        <span id="unpaid-count">0 expenses</span>
+        <span id="unpaid-count">0 expenses with a balance</span>
       </article>
     </section>
 
@@ -41,19 +41,33 @@
       <h2 class="section-title">Add an expense</h2>
 
       <form id="expense-form">
+        <div class="form-group">
+          <label for="expense-preset">Common expense</label>
+          <div class="preset-row">
+            <select id="expense-preset">
+              <option value="">Choose a common expense</option>
+              <option value="School fee">School fee</option>
+              <option value="Gas bill">Gas bill</option>
+              <option value="Electricity bill">Electricity bill</option>
+              <option value="Rent">Rent</option>
+              <option value="Milk bill">Milk bill</option>
+              <option value="Water bill">Water bill</option>
+            </select>
+            <button class="btn btn-secondary" type="button" id="use-preset">
+              Use selected
+            </button>
+          </div>
+        </div>
+
         <div class="form-grid">
           <div class="form-group">
             <label for="text">Expense name</label>
-            <input type="text" id="text"
-              placeholder="e.g. Electricity bill"
-              maxlength="100" required>
+            <input type="text" id="text" placeholder="e.g. Electricity bill" maxlength="100" required>
           </div>
 
           <div class="form-group">
-            <label for="amount">Amount ($)</label>
-            <input type="number" id="amount"
-              placeholder="0.00" min="0.01"
-              step="0.01" required>
+            <label for="amount">Total amount ($)</label>
+            <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" required>
           </div>
 
           <div class="form-group">
@@ -68,6 +82,19 @@
               <option value="paid">Paid</option>
             </select>
           </div>
+
+          <div class="form-group" id="payment-type-group" hidden>
+            <label for="payment-type">Payment type</label>
+            <select id="payment-type">
+              <option value="full">Full paid</option>
+              <option value="partial">Partial paid</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="paid-amount-group" hidden>
+            <label for="paid-amount">Amount paid ($)</label>
+            <input type="number" id="paid-amount" min="0.01" step="0.01" placeholder="Enter amount already paid">
+          </div>
         </div>
 
         <button class="btn" type="submit">+ Add expense</button>
@@ -78,12 +105,16 @@
       <div class="history-heading">
         <div>
           <h2 class="section-title">Expense history</h2>
-          <p class="muted">Filter by date, month, or payment status.</p>
+          <p class="muted">Search expenses or filter by date, month, and payment status.</p>
         </div>
-
         <button id="clear-filters" class="btn btn-light" type="button">
           Clear filters
         </button>
+      </div>
+
+      <div class="form-group search-group">
+        <label for="expense-search">Search expenses</label>
+        <input type="search" id="expense-search" placeholder="Search by expense name...">
       </div>
 
       <div class="filters">
@@ -109,9 +140,10 @@
         <div class="form-group">
           <label for="status-filter">Payment status</label>
           <select id="status-filter">
-            <option value="all">Paid and unpaid</option>
-            <option value="paid">Paid only</option>
-            <option value="unpaid">Unpaid only</option>
+            <option value="all">All statuses</option>
+            <option value="paid">Fully paid</option>
+            <option value="partial">Partially paid</option>
+            <option value="unpaid">Unpaid</option>
           </select>
         </div>
       </div>
@@ -122,39 +154,34 @@
           <strong id="filtered-total">$0.00</strong>
         </div>
         <div>
-          <span>Paid</span>
+          <span>Amount paid</span>
           <strong id="filtered-paid">$0.00</strong>
         </div>
         <div>
-          <span>Unpaid</span>
+          <span>Remaining</span>
           <strong id="filtered-unpaid">$0.00</strong>
         </div>
       </div>
 
       <ul id="list" class="list" aria-live="polite"></ul>
-      <p id="empty-state" class="empty-state">
-        No expenses match these filters.
-      </p>
+      <p id="empty-state" class="empty-state">No expenses match these filters.</p>
     </section>
 
     <section class="panel">
       <h2 class="section-title">Automatic data saving</h2>
       <p class="muted">
-        Connect a JSON file to save expenses automatically on this device.
+        Choose a JSON file in your Documents folder to keep a separate copy of your expenses.
       </p>
-
       <button class="btn" type="button" id="connect-save-file">
         Choose Documents Save File
       </button>
-
       <p id="save-status" role="status" aria-live="polite">
         Browser storage is active. File auto-save is not connected.
       </p>
     </section>
 
     <p class="privacy-note">
-      Expenses are saved in this browser and, when connected,
-      in your selected JSON file.
+      Expenses are saved in this browser and, when connected and permitted, in your selected JSON file.
     </p>
   </main>
 

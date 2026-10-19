@@ -13,7 +13,6 @@
   --muted: #6b7280;
   --border: #e5e7eb;
   --surface: #ffffff;
-  --page: #f3f6f8;
   --red: #dc4545;
 }
 
@@ -164,15 +163,23 @@ select:focus {
   transform: translateY(1px);
 }
 
-.btn-light {
+.btn-light,
+.btn-secondary {
   margin: 0;
   color: #374151;
   background: #eef2f5;
   white-space: nowrap;
 }
 
-.btn-light:hover {
+.btn-light:hover,
+.btn-secondary:hover {
   background: #dfe5e9;
+}
+
+.preset-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
 }
 
 .history-heading {
@@ -186,6 +193,10 @@ select:focus {
 .privacy-note {
   color: var(--muted);
   font-size: 13px;
+}
+
+.search-group {
+  margin-bottom: 4px;
 }
 
 .filtered-summary {
@@ -202,6 +213,7 @@ select:focus {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 0;
 }
 
 .filtered-summary span {
@@ -255,6 +267,13 @@ select:focus {
   white-space: nowrap;
 }
 
+.expense-balance {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+  margin-top: 4px;
+}
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -269,6 +288,11 @@ select:focus {
 .status-paid {
   color: #087443;
   background: #d9f8e8;
+}
+
+.status-partial {
+  color: #855b00;
+  background: #fff0c2;
 }
 
 .status-unpaid {
@@ -324,6 +348,17 @@ select:focus {
   padding: 2px 10px 12px;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+#save-status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 600px) {
   body {
     padding: 22px 11px;
@@ -354,6 +389,7 @@ select:focus {
 
   .history-heading {
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .filtered-summary {
@@ -370,12 +406,22 @@ select:focus {
     gap: 9px;
   }
 
-  .expense-amount {
+  .expense-amount,
+  .expense-balance {
     text-align: left;
   }
 
   .expense-actions {
     justify-content: flex-start;
   }
+
+  .preset-row {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-secondary {
+    width: 100%;
+  }
 }
+
 
